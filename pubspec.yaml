@@ -9,7 +9,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
+
+  # Icons and Images
+  cupertino_icons: ^1.0.6
+  fluttericon: ^2.0.0
+  extended_image: ^8.1.1
+  flutter_svg: ^2.0.9
+
+  # Storage
+  flutter_secure_storage: ^9.0.0
+  shared_preferences: ^2.2.2
+
+  # Online
+  http: ^1.1.0
+
+  # State management
+  flutter_bloc: ^8.1.3
+  bloc: ^8.1.2
+  meta: ^1.9.1
 
 dev_dependencies:
   flutter_test:

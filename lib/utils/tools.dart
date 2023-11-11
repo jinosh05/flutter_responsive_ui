@@ -1,0 +1,2 @@
+/// Custom Tools
+class Tools {}
