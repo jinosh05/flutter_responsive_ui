@@ -1,4 +1,4 @@
-import 'package:flutter_responsive_ui/data/network/api_client.dart';
+import "api_client.dart";
 
 class ApiProvider {
   // Client instance

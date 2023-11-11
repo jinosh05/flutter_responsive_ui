@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class AsyncButton extends StatefulWidget {
-  const AsyncButton({super.key, required this.child, required this.onPressed});
+  const AsyncButton({required this.child, required this.onPressed, super.key});
   final Widget child;
   final Function() onPressed;
   @override
@@ -11,23 +11,17 @@ class AsyncButton extends StatefulWidget {
 class _AsyncButtonState extends State<AsyncButton> {
   final ValueNotifier<bool> _valueNotifier = ValueNotifier(false);
 
-  _onTap() async {
+  Future<void> _onTap() async {
     _valueNotifier.value = true;
     await widget.onPressed();
     _valueNotifier.value = false;
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: _valueNotifier,
-      builder: (BuildContext context, bool value, Widget? child) {
-        return InkWell(
-          onTap: value
-              ? null
-              : () {
-                  _onTap();
-                },
+  Widget build(BuildContext context) => ValueListenableBuilder(
+        valueListenable: _valueNotifier,
+        builder: (context, value, child) => InkWell(
+          onTap: value ? null : _onTap,
           child: value
               ?
 
@@ -36,8 +30,6 @@ class _AsyncButtonState extends State<AsyncButton> {
               ///
               const CircularProgressIndicator()
               : widget.child,
-        );
-      },
-    );
-  }
+        ),
+      );
 }

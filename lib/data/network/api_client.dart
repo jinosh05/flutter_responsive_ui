@@ -1,9 +1,12 @@
-import 'dart:async';
+import "dart:async";
+import "dart:convert";
+import "dart:developer";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_responsive_ui/data/exception/app_exception.dart';
-import 'package:flutter_responsive_ui/data/network/constant/endpoints.dart';
-import 'package:http/http.dart' as http;
+import "package:flutter/material.dart";
+import "package:http/http.dart" as http;
+
+import "../exception/app_exception.dart";
+import "constant/endpoints.dart";
 
 ///
 /// An API response handling class for handling the
@@ -12,53 +15,114 @@ import 'package:http/http.dart' as http;
 ///
 class ApiClient {
   ///
-  /// Get:-----------------------------------------------------------------------
+  /// Get:---------------------------------------------------------------------
   ///
   Future<dynamic> get(
     String uri, {
     Map<String, String>? headers,
   }) async {
+    final header = <String, String>{
+      "accept": "application/json",
+      "Content-Type": "application/json",
+    };
+    if (headers != null) {
+      header.addAll(headers);
+    }
     try {
-      final http.Response response =
-          await http.get(Uri.parse(uri), headers: headers).timeout(
+      final response = await http.get(Uri.parse(uri), headers: header).timeout(
         const Duration(milliseconds: Endpoints.connectionTimeout),
         onTimeout: () {
           throw TimeoutException("Connection Timeout");
         },
       );
+
+      log(response.body);
       return _returnResponse(response);
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint(e.toString());
       rethrow;
     }
   }
 
   ///
-  /// Post:----------------------------------------------------------------------
+  /// Post:--------------------------------------------------------------------
   ///
   Future<dynamic> post(
     String uri, {
-    data,
+    dynamic data,
     Map<String, String>? headers,
   }) async {
+    final header = <String, String>{
+      "accept": "application/json",
+      "Content-Type": "application/json",
+    };
+    if (headers != null) {
+      header.addAll(headers);
+    }
     try {
-      final http.Response response =
-          await http.post(Uri.parse(uri), headers: headers, body: data).timeout(
+      debugPrint("URL : $uri");
+      debugPrint("Working $data using header $header");
+      final response = await http
+          .post(
+        Uri.parse(uri),
+        headers: header,
+        body: jsonEncode(data),
+      )
+          .timeout(
         const Duration(milliseconds: Endpoints.connectionTimeout),
         onTimeout: () {
           throw TimeoutException("Connection Timeout");
         },
       );
+
+      log(response.body);
+
       return _returnResponse(response);
-    } catch (e) {
-      throw FetchDataException('No Internet connection');
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
+
+  ///
+  /// Delete:------------------------------------------------------------------
+  ///
+  Future<dynamic> delete(
+    String uri, {
+    dynamic data,
+    Map<String, String>? headers,
+  }) async {
+    final header = <String, String>{
+      "accept": "application/json",
+    };
+    if (headers != null) {
+      header.addAll(headers);
+    }
+    try {
+      debugPrint("Working $data using header $header");
+
+      final response = await http
+          .delete(Uri.parse(uri), headers: header, body: data)
+          .timeout(
+        const Duration(milliseconds: Endpoints.connectionTimeout),
+        onTimeout: () {
+          throw TimeoutException("Connection Timeout");
+        },
+      );
+
+      log(response.body);
+
+      return _returnResponse(response);
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+      rethrow;
     }
   }
 
   dynamic _returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:
-        var responseJson = response.body;
+        final responseJson = response.body;
         debugPrint(responseJson);
         return responseJson;
       case 400:
@@ -71,7 +135,9 @@ class ApiClient {
         throw ServerNotFoundException(response.body);
       default:
         throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+          """
+Error occured while Communication with Server with StatusCode : ${response.statusCode}""",
+        );
     }
   }
 }

@@ -1,20 +1,19 @@
-import 'dart:developer';
+import "dart:developer";
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 
-import '../../configs/app_dimensions.dart';
-import '../../configs/app_typography.dart';
-import '../../configs/space.dart';
-import '../../constants/resources.dart';
-import '../../utils/regex_pattern.dart';
+import "../../configs/app_dimensions.dart";
+import "../../configs/app_typography.dart";
+import "../../configs/space.dart";
+import "../../constants/resources.dart";
+import "../../utils/regex_pattern.dart";
 
 class AppInputText extends StatelessWidget {
   const AppInputText({
-    super.key,
+    required this.hint, super.key,
     this.suffixIcon,
     this.ctrl,
-    required this.hint,
     this.label,
     this.type = AppInputType.alphanumeric,
     this.visible = true,
@@ -25,13 +24,15 @@ class AppInputText extends StatelessWidget {
   final Widget? suffixIcon;
   final TextEditingController? ctrl;
   final String hint;
-  final String? label, helper;
+  final String? label;
+  final String? helper;
   final AppInputType type;
-  final bool enabled, visible, blackLabel;
+  final bool enabled;
+  final bool visible;
+  final bool blackLabel;
 
   @override
-  Widget build(BuildContext context) {
-    return Material(
+  Widget build(BuildContext context) => Material(
       elevation: 2,
       borderRadius: BorderRadius.circular(
         AppDimensions.normalize(3),
@@ -85,7 +86,6 @@ class AppInputText extends StatelessWidget {
         ),
       ),
     );
-  }
 
   TextInputType getKeyboard() {
     if (type == AppInputType.email) {

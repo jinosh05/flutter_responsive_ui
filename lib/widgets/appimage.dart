@@ -1,8 +1,17 @@
-import 'package:extended_image/extended_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import "package:extended_image/extended_image.dart";
+import "package:flutter/material.dart";
+import "package:flutter_svg/flutter_svg.dart";
 
 class AppImage extends StatelessWidget {
+  const AppImage({
+    required this.imageUrl,
+    super.key,
+    this.width,
+    this.height,
+    this.fit,
+    this.color,
+    this.package,
+  });
   final String imageUrl;
   final double? width;
   final double? height;
@@ -10,25 +19,15 @@ class AppImage extends StatelessWidget {
   final Color? color;
   final String? package;
 
-  const AppImage({
-    required this.imageUrl,
-    Key? key,
-    this.width,
-    this.height,
-    this.fit,
-    this.color,
-    this.package,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    var isSvgImage = imageUrl.split('.').last == 'svg';
+    final isSvgImage = imageUrl.split(".").last == "svg";
 
     if (imageUrl.isEmpty) {
       return const SizedBox();
     }
 
-    if (!imageUrl.contains('http')) {
+    if (!imageUrl.contains("http")) {
       if (isSvgImage) {
         return SvgPicture.asset(
           imageUrl,
@@ -69,8 +68,8 @@ class AppImage extends StatelessWidget {
           case LoadState.completed:
             return state.completedWidget;
           case LoadState.loading:
+            return const SizedBox();
           case LoadState.failed:
-          default:
             return const SizedBox();
         }
       },

@@ -1,5 +1,5 @@
-import 'dart:developer';
-import 'dart:io';
+import "dart:developer";
+import "dart:io";
 
 ///
 /// [NetworkCheck] will check the Internet Availablity
@@ -7,24 +7,24 @@ import 'dart:io';
 class NetworkCheck {
   Future<bool> check() async {
     try {
-      final result = await InternetAddress.lookup('google.com');
+      final result = await InternetAddress.lookup("google.com");
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         return true;
       }
     } on SocketException catch (_) {
-      log('Internet_not connected');
+      log("Internet_not connected");
       return false;
     }
     return false;
   }
 
-  dynamic checkInternet(Function func) {
-    check().then((intenet) {
-      if (intenet) {
-        func(true);
-      } else {
-        func(false);
-      }
-    });
-  }
+  // dynamic checkInternet(Function func) {
+  //   check().then((intenet) {
+  //     if (intenet) {
+  //       func(true);
+  //     } else {
+  //       func(false);
+  //     }
+  //   });
+  // }
 }

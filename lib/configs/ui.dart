@@ -1,38 +1,39 @@
-import 'dart:math';
+import "dart:math";
 
-import 'package:flutter/widgets.dart';
+import "package:flutter/widgets.dart";
 
 class UI {
-  static double? diagonal;
+  UI._();
+  static late MediaQueryData? _mediaQueryData;
+  static double? width;
   static double? height;
   static double? horizontal;
-  static bool isPortrait = false;
-  static bool? lg;
-  static bool? md;
+  static double? vertical;
 
   /// Padding Before Keyboard raise
   static EdgeInsets? padding;
 
-  static Size? physicalSize;
-  static double? safeHeight;
-  static double? safeWidth;
-  static bool? sm;
-  static double? vertical;
-
   /// Padding After Keyboard raise
   static EdgeInsets? vi;
+  static late double? _safeAreaHorizontal;
+  static late double? _safeAreaVertical;
+  static double? safeWidth;
+  static double? safeHeight;
 
-  static double? width;
+  static double? diagonal;
+
+  static bool? xxs;
+  static bool? xs;
+  static bool? sm;
+  static bool? md;
+  static bool? xmd;
+  static bool? lg;
   static bool? xl;
   static bool? xlg;
-  static bool? xmd;
-  static bool? xs;
   static bool? xxlg;
-  static bool? xxs;
 
-  static MediaQueryData? _mediaQueryData;
-  static double? _safeAreaHorizontal;
-  static double? _safeAreaVertical;
+  static bool isPortrait = false;
+  static Size? physicalSize;
 
   static void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
@@ -49,16 +50,16 @@ class UI {
         _mediaQueryData!.padding.left + _mediaQueryData!.padding.right;
     _safeAreaVertical =
         _mediaQueryData!.padding.top + _mediaQueryData!.padding.bottom;
-    safeWidth = (width! - _safeAreaHorizontal!);
-    safeHeight = (height! - _safeAreaVertical!);
+    safeWidth = width! - _safeAreaHorizontal!;
+    safeHeight = height! - _safeAreaVertical!;
 
     ///
     isPortrait = (width ?? 0) < 600;
     physicalSize = View.of(context).physicalSize;
   }
 
-  static initChecks(MediaQueryData query) {
-    var size = query.size;
+  static void initChecks(MediaQueryData query) {
+    final size = query.size;
     diagonal = sqrt((size.width * size.width) + (size.height * size.height));
     xxs = size.width > 300;
     xs = size.width > 360;

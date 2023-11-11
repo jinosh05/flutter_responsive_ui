@@ -1,21 +1,21 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
-import '../configs/space.dart';
+import "../configs/space.dart";
 
 class AppColumn extends StatelessWidget {
   const AppColumn({
-    super.key,
+    required this.children, super.key,
     this.padding,
     this.cstart = true,
     this.noScroll = false,
-    required this.children,
     this.controller,
   });
 
   final ScrollController? controller;
   final EdgeInsets? padding;
   final List<Widget> children;
-  final bool cstart, noScroll;
+  final bool cstart;
+  final bool noScroll;
 
   @override
   Widget build(BuildContext context) {

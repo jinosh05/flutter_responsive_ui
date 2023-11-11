@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_responsive_ui/constants/resources.dart';
+import "package:flutter/material.dart";
 
-import 'app_dimensions.dart';
+import "../constants/resources.dart";
+import "app_dimensions.dart";
 
 class AppText {
+  AppText();
   static TextStyle? btn;
 
   // Headings
@@ -30,10 +31,10 @@ class AppText {
   static TextStyle? l2;
   static TextStyle? l2b;
 
-  static init() {
+  static void init() {
     const b = FontWeight.bold;
 
-    const baseStyle = TextStyle(fontFamily: "Poppins");
+    const baseStyle = TextStyle(fontFamily: "LilitaOne");
 
     h1 = baseStyle.copyWith(fontSize: AppDimensions.font(22));
     h1b = h1!.copyWith(fontWeight: b);
@@ -65,26 +66,24 @@ class AppText {
 }
 
 extension SuperTextStyles on TextStyle {
-  TextStyle cl(Color color) {
-    return copyWith(
-      color: color,
-    );
-  }
+  TextStyle cl(Color color) => copyWith(
+        color: color,
+      );
 
-  TextStyle s([double? size]) {
-    return copyWith(
-      fontSize: size ?? fontSize,
-    );
-  }
+  TextStyle ita() => copyWith(
+        fontStyle: FontStyle.italic,
+      );
 
-  TextStyle tsc([double multiplier = 1.0]) {
-    return copyWith(
-      fontSize: fontSize! * multiplier,
-    );
-  }
+  TextStyle s([double? size]) => copyWith(
+        fontSize: size ?? fontSize,
+      );
+
+  TextStyle tsc([double multiplier = 1.0]) => copyWith(
+        fontSize: fontSize! * multiplier,
+      );
 
   TextStyle w(int i) {
-    FontWeight w = FontWeight.w400;
+    var w = FontWeight.w400;
 
     if (i == 3) {
       w = FontWeight.w300;
@@ -115,7 +114,7 @@ extension SuperTextStyles on TextStyle {
 
 /// Additional TextStyle Extensions can be added here
 extension CustomTextStyles on TextStyle {
-  TextStyle priClr() {
-    return copyWith(color: AppColors.primary);
-  }
+  TextStyle priClr() => copyWith(color: AppColors.primary);
+
+  TextStyle pop() => copyWith(fontFamily: "Poppins");
 }

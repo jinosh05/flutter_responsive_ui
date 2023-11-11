@@ -1,12 +1,10 @@
 class AppException implements Exception {
-  final String? _message;
-  final String? _prefix;
 
   AppException([this._message, this._prefix]);
+  final String? _message;
+  final String? _prefix;
   @override
-  String toString() {
-    return "$_prefix$_message";
-  }
+  String toString() => "$_prefix$_message";
 }
 
 class FetchDataException extends AppException {

@@ -1,21 +1,22 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class AppRoutes {
-  static void push(BuildContext context, Widget? page) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => page!),
-    );
-  }
-
-  static void replace(BuildContext context, Widget page) {
-    Navigator.of(context).pushReplacement(
+  AppRoutes();
+  static Future<void> push(BuildContext context, Widget page) async {
+    await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => page),
     );
   }
 
-  static void makeFirst(BuildContext context, Widget page) {
+  static Future<void> replace(BuildContext context, Widget page) async {
+    await Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => page),
+    );
+  }
+
+  static Future<void> makeFirst(BuildContext context, Widget page) async {
     Navigator.of(context).popUntil((predicate) => predicate.isFirst);
-    Navigator.of(context).pushReplacement(
+    await Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => page),
     );
   }
@@ -24,13 +25,14 @@ class AppRoutes {
     Navigator.of(context).pop();
   }
 
-  static void dismissAlert(context) {
+  static void dismissAlert(BuildContext context) {
     Navigator.of(context).pop();
   }
 
-  static void pushAndRemove(BuildContext context, Widget page) {
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => page),
-        (Route<dynamic> route) => false);
+  static Future<void> pushAndRemove(BuildContext context, Widget page) async {
+    await Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => page),
+      (route) => false,
+    );
   }
 }

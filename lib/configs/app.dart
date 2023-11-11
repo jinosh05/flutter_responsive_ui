@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
-import 'app_dimensions.dart';
-import 'app_typography.dart';
-import 'space.dart';
-import 'ui.dart';
+import "app_dimensions.dart";
+import "app_typography.dart";
+import "space.dart";
+import "ui.dart";
 
 class App {
+  App();
   static bool? isLtr;
   static bool showAds = false;
 
-  static init(BuildContext context) {
+  static void init(BuildContext context) {
     UI.init(context);
     AppDimensions.init();
 

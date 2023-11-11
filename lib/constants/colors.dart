@@ -1,4 +1,4 @@
-part of 'resources.dart';
+part of "resources.dart";
 
 class AppColors {
   static const Color primary = Color.fromARGB(255, 44, 90, 243);

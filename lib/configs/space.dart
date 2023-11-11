@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
-import 'ui.dart';
-import 'app_dimensions.dart';
+import "package:flutter/material.dart";
+
+import "app_dimensions.dart";
+import "ui.dart";
 
 class Space {
+  Space();
   static Widget? x;
   static Widget? y;
   static Widget? x1;
